@@ -1,11 +1,21 @@
+import paquete.*
 import mensajeros.*
 import transportes.*
 import destinos.*
 
 object empresa {
-  const mensajeros = [roberto, neo]
-  var cantidadMensajeros = mensajeros.size()
+  const mensajeros = []
+  const paquetesEnviados = []
+  const paquetesPendientes = []
 
+  method enviarPaquete(unPaquete){
+    if(self.algunMensajeroPuedeEntregar(unPaquete)){
+          paquetesEnviados.add(unPaquete)
+    }
+    else{
+      paquetesPendientes.add(unPaquete)
+    }
+  }
   method contratarA(unMensajero){
     mensajeros.add(unMensajero)
   }
@@ -16,15 +26,45 @@ object empresa {
     mensajeros.clear()
   }
   method esMensajeriaGrande(){
-    return cantidadMensajeros > 2
+    return mensajeros.size() > 2
   }
 
-  method puedeSerEntregadoPorElPrimero(destino){
-    return destino.puedePasar(mensajeros.first())
+  method puedeSerEntregadoPorElPrimero(unPaquete){
+    return if(not mensajeros.isEmpty()){
+     unPaquete.puedeSerEntregado(mensajeros.first())
+    }
+    else{
+      false
+    }
   }
-
   method pesoDelUltimo(){
     return mensajeros.last().peso()
+  }
+  method algunMensajeroPuedeEntregar(unPaquete){
+    return mensajeros.any({m => unPaquete.puedeSerEntregado(m)})
+  }
+  method todosLosQuePuedenLlevar(unPaquete){
+    return mensajeros.filter({m => unPaquete.puedeSerEntregado(m)})
+  }
+  method tieneSobrepeso(){
+    return mensajeros.sum({m => m.peso()}) / mensajeros.size() > 500
+    //mensajeros.map({m => m.peso()}).sum() / mensajeros.size() > 500
+  }
+
+  method facturacion(){
+    return paquetesEnviados.sum({p => p.precio()})
+  }
+  method enviar(conjuntoDePaquetes){
+    conjuntoDePaquetes.forEach({p => self.enviarPaquete(p)})
+  }
+  method enviarPaquetePendienteMasCaro(){
+    if(self.algunMensajeroPuedeEntregar(self.paqueteMasCaroPendiente())){
+      self.enviarPaquete(self.paqueteMasCaroPendiente())
+      paquetesPendientes.remove(self.paqueteMasCaroPendiente())
+    }
+  }
+  method paqueteMasCaroPendiente(){
+    return paquetesPendientes.max({p => p.precio()} )
   }
 }
 

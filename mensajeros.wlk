@@ -2,16 +2,15 @@ import destinos.*
 import transportes.*
 
 object roberto {
-  var peso = 90
   var vehiculo = bicicleta
   method peso(){
-    return peso
-  }
-  method pesoConVehiculo(){
-    return peso + vehiculo.pesoTotal()
+    return 90 + vehiculo.peso()
   }
   method cambiarVehiculo(unVehiculo){
     vehiculo = unVehiculo
+  }
+  method puedeLlamar(){
+    return false
   }
 
 }
@@ -19,7 +18,7 @@ object chuckNorris {
    method peso(){
     return 80
   }
-  method tieneCredito(){
+  method puedeLlamar(){
     return true
   }
 }
@@ -31,7 +30,10 @@ object neo {
   method sinSaldo(){
     tieneCredito = false
   }
-  method tieneCredito(){
+  method cargarCredito(){
+    tieneCredito = true
+  }
+  method puedeLlamar(){
     return tieneCredito
   }
 }

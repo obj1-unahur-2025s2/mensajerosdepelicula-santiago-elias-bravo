@@ -1,21 +1,17 @@
 import destinos.*
 import mensajeros.*
 object bicicleta {
-  method pesoTotal(){
+  method peso(){
     return 5
   }
 }
 object camion {
-  var peso = 500
   var acoplados = 1
 
-  method peso(){
-    return peso
-  }
-  method acoplados(unaCantidad){
+  method cantidadAcoplados(unaCantidad){
     acoplados = unaCantidad
   }
-  method pesoTotal(){
-    return peso * acoplados
+  method peso(){
+    return 500 * (acoplados.max(1))
   }
 }
