@@ -16,10 +16,13 @@ object empresa {
       paquetesPendientes.add(unPaquete)
     }
   }
-  method contratarA(unMensajero){
+  method mensajeros(){
+    return mensajeros
+  }
+  method contratar(unMensajero){
     mensajeros.add(unMensajero)
   }
-  method despedirA(unMensajero){
+  method despedir(unMensajero){
     mensajeros.remove(unMensajero)
   }
   method despedirATodos(){
@@ -65,6 +68,12 @@ object empresa {
   }
   method paqueteMasCaroPendiente(){
     return paquetesPendientes.max({p => p.precio()} )
+  }
+  method paquetesEnviados(){
+    return paquetesEnviados
+  }
+  method paquetesPendientes(){
+    return paquetesPendientes
   }
 }
 
